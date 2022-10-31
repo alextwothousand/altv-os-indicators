@@ -18,3 +18,6 @@ Build.
 And run.
 
 Or use it your way.
+
+## I need more help
+Open a scripting question on the alt:V discord and tag me @alex_/
