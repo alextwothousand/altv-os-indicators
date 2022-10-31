@@ -76,7 +76,7 @@ alt.on("streamSyncedMetaChange", (entity: alt.Entity) => {
 	const vehicle = entity as alt.Vehicle;
 
 	if (!vehicle.hasStreamSyncedMeta("leftIndicator") || !vehicle.hasStreamSyncedMeta("rightIndicator"))
-		continue; // Continue.
+		return;
 
 	vehicle.indicator.left = vehicle.getStreamSyncedMeta("leftIndicator") as boolean;
 	vehicle.indicator.right = vehicle.getStreamSyncedMeta("rightIndicator") as boolean;
