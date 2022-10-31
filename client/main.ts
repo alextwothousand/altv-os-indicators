@@ -69,15 +69,18 @@ alt.on("keydown", (key: alt.KeyCode) => {
 	}
 });
 
-setInterval(() => {
-	for (const vehicle of alt.Vehicle.all) {
-		if (!vehicle.hasStreamSyncedMeta("leftIndicator") || !vehicle.hasStreamSyncedMeta("rightIndicator"))
-			continue; // Continue.
+alt.on("streamSyncedMetaChange", (entity: alt.Entity) => {
+	if (!(entity instanceof alt.Vehicle))
+		return;
 
-		vehicle.indicator.left = vehicle.getStreamSyncedMeta("leftIndicator") as boolean;
-		vehicle.indicator.right = vehicle.getStreamSyncedMeta("rightIndicator") as boolean;
+	const vehicle = entity as alt.Vehicle;
 
-		native.setVehicleIndicatorLights(vehicle, 1, vehicle.indicator.left);
-		native.setVehicleIndicatorLights(vehicle, 0, vehicle.indicator.right);
-	}
-}, 100);
+	if (!vehicle.hasStreamSyncedMeta("leftIndicator") || !vehicle.hasStreamSyncedMeta("rightIndicator"))
+		continue; // Continue.
+
+	vehicle.indicator.left = vehicle.getStreamSyncedMeta("leftIndicator") as boolean;
+	vehicle.indicator.right = vehicle.getStreamSyncedMeta("rightIndicator") as boolean;
+
+	native.setVehicleIndicatorLights(vehicle, 1, vehicle.indicator.left);
+	native.setVehicleIndicatorLights(vehicle, 0, vehicle.indicator.right);
+});
