@@ -19,6 +19,7 @@ This resource is a fork of [alextwothousand's code](https://github.com/alextwoth
   - A bug with the event call which sent the player across with the event arguments has removed that argument.
   - The event call is referenced **once**.
   - The indicator state uses the `vehicle.indicatorLights` property as it was intended for and only updates the state when it returns on the stream sync event.
+- Players were able to modify the vehicle indicator state from any seat, this has been modified to check for the `netOwner` from the client; and `driver` from the server.
 
 > The `package.json` version may not always be changed, but it will generally always have something to indicate it's intention as a fork of the original.
 
@@ -66,7 +67,7 @@ npm run build --ws --if-present
 
 - [`yarn workspace` template starter](https://github.com/RocketDragon/altv-yarn-workspace-starter)
 - [`degit` (NPM)](https://npm.im/degit) [(GitHub)](https://github.com/Rich-Harris/degit)
-- ~~`compatibility` branch~~ - Pending
+- [`compatibility` branch](https://github.com/sudojunior/altv-indicators/tree/compatibility)
   > This will attempt to patch the original code, but I will be less likely to provide further support due to its use of `esbuild`.
 
 ## I need more help
