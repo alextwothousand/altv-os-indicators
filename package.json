@@ -1,0 +1,13 @@
+{
+  "name": "altv-indicators",
+  "version": "1.0.1-patch",
+  "type": "module",
+  "scripts": {
+    "build": "tsc"
+  },
+  "devDependencies": {
+    "@altv/types-client": "^2.4.4",
+    "@altv/types-server": "^2.5.7",
+    "typescript": "^4.9.5"
+  }
+}
