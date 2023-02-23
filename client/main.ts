@@ -17,10 +17,12 @@ alt.on("gameEntityCreate", (entity: alt.Entity) => {
 });
 
 alt.on("keydown", (key: alt.KeyCode) => {
-	if (alt.Player.local.vehicle === null)
+	const vehicle = alt.Player.local.vehicle;
+	if (vehicle === null)
 		return; // Don't need to execute nothing if you aren't in a vehicle.
 
-	const vehicle = alt.Player.local.vehicle;
+	if (vehicle.netOwner !== alt.Player.local)
+		return;
 
 	if (key === KEY_J) {
 		// Indicate left
