@@ -3,10 +3,11 @@ import alt from "alt-client";
 import { KeyCode, metaKey, VehicleIndicatorLights } from '../shared/types';
 
 alt.on("keydown", (key: alt.KeyCode) => {
-	const vehicle = alt.Player.local.vehicle;
+	const player = alt.Player.local;
+	const vehicle = player.vehicle;
 
-	if (vehicle === null)
-		return; // Don't need to execute nothing if you aren't in a vehicle.
+	if (vehicle === null || vehicle.netOwner.id !== player.id)
+		return;
 
 	// @ts-ignore
 	let indicatorLights = vehicle.indicatorLights as VehicleIndicatorLights;
