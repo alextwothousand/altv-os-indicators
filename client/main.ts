@@ -17,10 +17,12 @@ alt.on("gameEntityCreate", (entity: alt.Entity) => {
 });
 
 alt.on("keydown", (key: alt.KeyCode) => {
-	if (alt.Player.local.vehicle === null)
+	const vehicle = alt.Player.local.vehicle;
+	if (vehicle === null)
 		return; // Don't need to execute nothing if you aren't in a vehicle.
 
-	const vehicle = alt.Player.local.vehicle;
+	if (vehicle.netOwner !== alt.Player.local)
+		return;
 
 	if (key === KEY_J) {
 		// Indicate left
@@ -36,7 +38,7 @@ alt.on("keydown", (key: alt.KeyCode) => {
 		vehicle.indicator.left = !vehicle.indicator.left;
 		native.setVehicleIndicatorLights(vehicle, 1, vehicle.indicator.left);
 
-		alt.emitServer("indicators:SetIndicators", alt.Player.local, vehicle, vehicle.indicator.left, vehicle.indicator.right);
+		alt.emitServer("indicators:SetIndicators", vehicle, vehicle.indicator.left, vehicle.indicator.right);
 	} else if (key === KEY_L) {
 		// Indicate right
 
@@ -51,7 +53,7 @@ alt.on("keydown", (key: alt.KeyCode) => {
 		vehicle.indicator.right = !vehicle.indicator.right;
 		native.setVehicleIndicatorLights(vehicle, 0, vehicle.indicator.right);
 
-		alt.emitServer("indicators:SetIndicators", alt.Player.local, vehicle, vehicle.indicator.left, vehicle.indicator.right);
+		alt.emitServer("indicators:SetIndicators", vehicle, vehicle.indicator.left, vehicle.indicator.right);
 	} else if (key === KEY_K) {
 		// Hazard lights.
 		// Priority over other kinds of lights.
@@ -66,6 +68,8 @@ alt.on("keydown", (key: alt.KeyCode) => {
 
 		native.setVehicleIndicatorLights(vehicle, 0, vehicle.indicator.left);
 		native.setVehicleIndicatorLights(vehicle, 1, vehicle.indicator.right);
+
+		alt.emitServer("indicators:SetIndicators", vehicle, vehicle.indicator.left, vehicle.indicator.right);
 	}
 });
 
